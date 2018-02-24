@@ -1,0 +1,36 @@
+.aspect-ratio-2-1 {
+  padding-bottom: 50%;
+}
+
+.v-h-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.h-center{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+.swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  color: #000;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.swiper-pagination-bullet-active {
+  color: #fff;
+  background: #007aff;
+}
+
+.inline-block-space{
+  font-size: 0px;
+  letter-spacing: 0px;
+}
+

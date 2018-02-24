@@ -1,0 +1,109 @@
+@import '../sass/variable.scss';
+@import '../sass/adapter.scss';
+@import '../sass/common.scss';
+#app {
+  font-family: 'PingFang SC','Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#virew-wrapper {
+  height: 100%;
+}
+
+.content-wrapper {
+  height: 100%;
+  position: relative;
+}
+.eca-header{
+  line-height: 70px;
+  box-shadow: 0 3px 5px -5px rgb(0, 0, 0);
+}
+.eca-title>div{
+  display: inline-block;
+}
+.eca-title{
+  display: inline-block;
+  line-height: 14px;
+  vertical-align: middle;
+  font-size: 13px;
+  font-weight: bold;
+}
+.eca-logo{
+  width: 24px;
+  height: 24px;
+  margin-right:5px;
+  border:1px solid lightgray;
+}
+.eca-content-section{
+  width: 1166px;
+  margin: 0px auto;
+}
+.class-filter{
+  padding: 5px 0px
+}
+.filter-item{
+  margin: 30px 0px;
+}
+.filter-category{
+  margin-right:5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.category-name{
+  &:hover{
+    color: goldenrod;
+    cursor: pointer;
+  }
+  min-width: 50px;
+  line-height: 25px;
+  margin-left:40px;
+  padding: 1px 4px;
+  text-align: center;
+}
+.class-filter-selected{
+  background: rgb(0,0,0);
+  color: white;
+  border-radius: 3px;
+}
+.class-list{
+  background: rgb(243,243,243);
+  overflow-y: auto;
+}
+.class-list-ct{
+  margin: 14px auto;
+  font-size: 0;
+}
+.class-item{
+  display: inline-block;
+  width: 218px;
+  line-height: 22px;
+  margin-top: 24px;
+  font-size: 12px;
+  color: #A8ABAE;
+}
+.class-item:not(:last-child){
+  margin-right:15px;
+}
+.class-cover{
+  height: 126px;
+  border-radius:6px;
+  background: gray;
+}
+.class-name{
+  line-height: 36px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #232732;
+}
+.pro-member-count>i{
+  margin: 0 4px 0 12px;
+}
+.eca-logo{
+
+}
+.eca-location{
+
+}
+.city-name{
+
+}

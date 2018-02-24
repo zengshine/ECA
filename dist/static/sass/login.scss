@@ -1,0 +1,177 @@
+@import '../sass/variable.scss';
+@import '../sass/adapter.scss';
+.login-header {
+  position: relative;
+  background: url('../images/intro-bg.jpg');
+  background-size: 100%;
+  color: white;
+  overflow: hidden;
+  .content {
+    @extend .index-header-des-adapt;
+    width: 1050px;
+    &>div {
+      display: inline-block;
+      vertical-align: top;
+    }
+    .left {
+      .logo {
+        width: 458px;
+        height: 87px;
+        @include feature-background("../images/footer-logo.png");
+        background-position: left top;
+      }
+      .des {
+        font-family: MicrosoftYaHei;
+        font-size: 45px;
+        font-weight: bold;
+        letter-spacing: 3.2px;
+        line-height: 100px;
+        margin-top: 30px;
+      }
+    }
+    .right {
+      width: 375px;
+      margin-left: 50px;
+      font-family: MicrosoftYaHei;
+      .account-des {
+        text-align: center;
+        span {
+          display: inline-block;
+          text-align: left;
+          font-size: 15px;
+          line-height: 32px;
+        }
+      }
+      .form {
+        .switch {
+          font-size: 0;
+          letter-spacing: 0;
+          border-bottom: 1px solid lightgray;
+          div {
+            &:first-child>span {
+              border-bottom: 1px solid #5a92ff;
+            }
+            display: inline-block;
+            width: 50%;
+            font-size: 16px;
+            text-align: center;
+            line-height: 50px;
+            span {
+              display: inline-block;
+            }
+          }
+        }
+        .form-content {
+          .form-item {
+            &.valid-code {
+              position: relative;
+              input {
+                width: 180px;
+              }
+              span {
+                display: inline-block;
+                position: absolute;
+                right: 0px;
+                width: 105px;
+                text-align: center;
+                line-height: 42px;
+                background: #05bca8;
+                cursor: pointer;
+              }
+            }
+            line-height: 38px;
+            margin: 20px 0;
+            .item-name {
+              display: inline-block;
+              width: 50px;
+              margin-right: 25px;
+              text-align-last: justify;
+              span {
+                display: inline-block;
+                width: 100%;
+              }
+            }
+          }
+          input {
+            background: none;
+            border: 1px solid #ffffff;
+            width: 295px;
+          }
+          margin-top:15px;
+          .login-form {}
+          .protocol {
+            padding-left: 80px;
+            .el-checkbox__label {
+              color: #ffffff;
+            }
+            li {
+              float: right;
+            }
+          }
+          .form-handle-btn {
+            line-height: 45px;
+            background: #5a92ff;
+            text-align: center;
+            margin: 15px 0;
+            cursor: pointer;
+          }
+          .switch-link {
+            text-align: center;
+            font-family: MicrosoftYaHei;
+            font-size: 14px;
+            color: #5a92ff;
+          }
+          .other-ways{
+            .des{
+              font-size: 0;
+              letter-spacing: 0;
+              margin-top:15px;
+              span{
+                display: inline-block;
+                line-height: 32px;
+              }
+              span:nth-child(odd){
+                width: 22.5%;
+                border-bottom:1px solid lightgray;
+                height: 0px;
+                vertical-align: 3px;
+              }
+              span:nth-child(2){
+                width: 55%;
+                font-size: 12px;
+                text-align: center;
+              }
+            }
+            .ways{
+              margin-top:20px;
+                              text-align: center;
+              span{
+                display: inline-block;
+                width: 37px;
+                height: 37px;
+                margin: 0 10px;
+                &:nth-child(1){
+                  @include feature-background("../images/授权登录注册/qq.png");
+                }
+                                &:nth-child(2){
+                  @include feature-background("../images/授权登录注册/微信.png");
+                }
+                                &:nth-child(3){
+                  @include feature-background("../images/授权登录注册/微博.png");
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+footer{
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+    .website-copyright {
+    background: none !important;
+  }
+}

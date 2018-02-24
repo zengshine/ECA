@@ -1,0 +1,75 @@
+/*dialog*/
+div.el-dialog--small{
+    min-width: 698px;
+}
+div.el-dialog__body{
+    padding: 10px 20px;
+}
+div.el-dialog__header {
+    padding: 20px 20px 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0,.1);
+}
+div.el-dialog__footer {
+    padding: 10px 20px 15px;
+    text-align: right;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(0, 0, 0,.1);
+}
+/*dialog*/
+/*group-tree*/
+.group-tree-filter-filed-ct>div.el-input>input.el-input__inner{
+  border: 0 none !important;
+}
+div.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+  background-color: #e87352;
+  color: white;
+  border-radius:5px;
+}
+.self-render-tree-label{
+  font-size: 14px;
+}
+/*group-tree*/
+/*popover*/
+div.el-tree{
+  border: none;
+}
+div.el-popover{
+  padding: 0;
+}
+/*popover*/
+/*loading mask*/
+div.el-loading-mask{
+  background-color: rgba(0, 0, 0, .7);
+}
+/*loading mask*/
+/* 信息录入界面 */
+.infoInputForm .el-input__inner,.infoInputForm .el-date-editor.el-input,.infoInputForm .el-date-editor.el-input__inner{
+  width:120px;
+}
+.infoInputForm .el-form-item__label{
+  padding: 0 !important;
+}
+.infoInputForm  .el-textarea{
+  width: 390px;
+}
+.infoInput-table thead tr th:last-of-type{
+  font-size: 18px;
+}
+.infoInput-table .el-table__body-wrapper{
+  overflow-x:hidden;
+}
+.infoInput-table td{
+  padding: 5px 0;
+  font-size: 12px;
+}
+.infoInput-table th{
+  padding: 7px 0;
+}
+.el-input--small .el-input__inner{
+  height: 26px;
+  vertical-align: text-top;
+}
+.el-input--small .el-input__icon{
+  line-height: 26px;
+}

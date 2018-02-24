@@ -1,0 +1,8 @@
+$SimSunFF: SimSun;
+$grayColor:lightgray;
+@mixin feature-background($url){
+  background: url($url);
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+}

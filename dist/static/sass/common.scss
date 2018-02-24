@@ -1,0 +1,121 @@
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+  font-family: PingFang SC;
+}
+
+//定义滚动条样式
+::-webkit-scrollbar{
+  width:6px;
+}
+::-webkit-scrollbar-track-piece{
+  background:none;
+}
+::-webkit-scrollbar-thumb {
+  background:#DCD9DE;
+  border-radius:6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background:#EAE6EA;
+}
+//定位，显示
+.flow-list{
+  display: flex;
+  flex-flow:row;
+}
+.in-b{
+  display: inline-block;
+}
+.flex-item-3-empty{
+  min-width: 30%;
+  height: 0;
+}
+//位置
+.ps-rel{
+  position: relative;
+}
+//宽高
+.height-60{
+  height: 60px;
+  line-height: 60px;
+}
+.height-40{
+  height: 40px;
+}
+.height-45{
+  height: 45px;
+}
+.height-50{
+  height: 50px;
+  line-height: 50px;
+}
+.height-55{
+  height: 55px;
+}
+.height-65{
+  height: 65px;
+}
+//边距
+.ml-15{
+  margin-left:15px;
+}
+.ml-20{
+  margin-left:20px;
+}
+.ml-30{
+  margin-left:30px;
+}
+.mr-30{
+  margin-right:30px;
+}
+.padd-h-20{
+  padding: 0 20px;
+}
+//边框
+.shadow-divider{
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, .05);
+}
+.solid-divider{
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+.border-radiu-bottom-5{
+  border-radius:0 0 5px 5px;
+}
+//背景
+.bg-white{
+  background-color:white;
+}
+//其它
+.d-hidden{
+  display:none;
+}
+.ellips-txt{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+//-图标路径类
+.workWindows{
+  background-image:url('../../static/images/manage/竖菜单/仪表盘1.png')
+}
+.tsFiles{
+  background-image:url('../../static/images/manage/竖菜单/师生档案1.png')
+}
+.courseManage{
+  background-image:url('../../static/images/manage/竖菜单/课程管理1.png')
+}
+.classManage{
+  background-image:url('../../static/images/manage/竖菜单/班级管理1.png')
+}
+.expenseManage{
+  background-image:url('../../static/images/manage/竖菜单/收支管理1.png')
+}
+.piconectManage{
+  background-image:url('../../static/images/manage/竖菜单/微网管理1.png')
+}
+.serviceStore{
+  background-image:url('../../static/images/manage/竖菜单/服务商店1.png')
+}
+
