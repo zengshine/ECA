@@ -9,7 +9,17 @@
 #virew-wrapper {
   height: 100%;
 }
-
+.swiper-container{
+  width: 100%;
+  height: 100%;
+}
+.swiper-container .swiper-pagination-bullet{
+  width: 10px;
+  height: 10px;
+}
+.eca-dialog-header{
+  color: white;
+}
 .content-wrapper {
   height: 100%;
   position: relative;
@@ -35,8 +45,17 @@
   border:1px solid lightgray;
 }
 .eca-content-section{
+  position: relative;
   width: 1166px;
   margin: 0px auto;
+}
+.course-add-btn{
+  position: absolute;
+  top:36px;
+  right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+
 }
 .class-filter{
   padding: 5px 0px
@@ -75,19 +94,36 @@
 }
 .class-item{
   display: inline-block;
-  width: 218px;
   line-height: 22px;
   margin-top: 24px;
   font-size: 12px;
+  border-radius:6px;
   color: #A8ABAE;
+  overflow:hidden;
+  cursor: pointer;
+}
+.class-item-home{
+  width: 218px;
+}
+.class-item-home .class-cover{
+  border-radius:6px;
+}
+.class-item-addCourseDialog{
+  width: 218px;
+  background: white;
+}
+.class-item-addCourseDialog .class-cover{
+  height: 140px;
 }
 .class-item:not(:last-child){
   margin-right:15px;
 }
 .class-cover{
   height: 126px;
-  border-radius:6px;
   background: gray;
+}
+.course-info-detail-ct{
+  padding: 7px 10px;
 }
 .class-name{
   line-height: 36px;
@@ -106,4 +142,164 @@
 }
 .city-name{
 
+}
+.eca-dialog-header .el-dialog__title{
+  color: white;
+}
+.eca-dialog-header div.el-dialog__header{
+  padding: 20px 30px;
+  background: rgba(0,0,0,0.76);
+  color: white;
+}
+.eca-dialog-header .el-dialog{
+  border-radius:10px;
+  overflow: hidden;
+}
+.eca-dialog-header div.el-dialog__header button i.el-icon-close{
+  font-size: 20px;
+}
+.course-name{
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 56px;
+  margin-bottom:15px;
+  margin-left:15px;
+}
+.course-property .course-property-item{
+  display: inline-block;
+  padding: 0 15px;
+}
+.course-property .course-property-item:not(:last-child){
+  border-right:1px solid lightgray;
+}
+.eca-dialog-header .el-dialog__body{
+  padding: 0;
+}
+.course-info-dialog-body{
+  min-height: 550px;
+  margin: 25px 35px 25px 45px;
+}
+.course-info-left{
+  width: 675px;
+}
+.course-info-right{
+  width:310px;
+}
+.course-section-title{
+  border-bottom: 1px solid #979797;
+  padding: 12px 5px;
+}
+.course-section-info{
+  border-bottom: 1px solid #C1BEBE;
+  padding: 12px 5px;
+}
+.course-instructor-profile-picture{
+  width: 67px;
+  border-radius:50%;
+}
+.course-instructor-profile-info{
+  display: inline-block;
+  vertical-align: middle;
+}
+.section-num{
+  margin-right:10px;
+}
+.label-blue{
+  padding: 1px 5px;
+  border-radius:10px;
+  background:#4A90E2;
+  color:white;
+}
+.course-info-carousel{
+  width: 320px;
+  height: 200px;
+}
+.addCourse-dialog-body{
+  height: 800px;
+}
+.addCourse-dialog-body>div{
+  overflow-y:scroll;
+  overflow-x: hidden;
+}
+.add-course-left{
+  width: 22%;
+  padding: 0 18px;
+  background-color:#DFE4E5;
+}
+.add-course-right{
+  width: 78%;
+  padding: 20px;
+}
+.tag-switch-bar{
+  border-bottom:1px solid  #E1E1E1;
+}
+.tag-switch-bar span{
+  &:hover{
+    color: goldenrod;
+  }
+  margin: 0 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.tag-selected{
+  color: #4A90E2;
+}
+.course-entering-form .el-input-number--medium{
+  width: 100%;
+}
+.course-entering-form .el-form--label-top .el-form-item__label{
+  padding: 0;
+}
+.add-item-car{
+  background-color: #fbfdff;
+  border: 1px dashed #c0ccda;
+  border-radius: 6px;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.course-entering-add{
+  width: 218px;
+  height: 244px;
+  line-height: 244px;
+}
+.course-section-add{
+  width: 100%;
+  height: 90px;
+  line-height: 90px;
+}
+.section-add-item-ct{
+  min-height: 120px;
+  padding:10px;
+}
+.section-name-input-ct{
+  width: 200px;
+}
+.segment-name-input-ct{
+  width: 700px;
+}
+.segment-name-input-ct input{
+  padding-left:55px;
+}
+.segment-add-ct{
+  position: absolute;
+  color:#4A90E2;
+  right: 5px;
+  top: 50%;
+  margin-top:-12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.segment-num{
+  position: absolute;
+  height: 26px;
+  line-height: 30px;
+  left: 75px;
+  top: 50%;
+  margin-top:-13px;
+  color: #adb1b7;
+  z-index: 1;
+}
+.real-Name-authenticated label{
+  height: 35px;
 }

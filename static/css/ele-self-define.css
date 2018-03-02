@@ -76,3 +76,6 @@ div.el-loading-mask{
 .el-input--small .el-input__icon{
   line-height: 26px;
 }
+.el-upload__input{
+  display: none !important;
+}
