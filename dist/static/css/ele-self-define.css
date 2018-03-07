@@ -66,10 +66,21 @@ div.el-loading-mask{
 .infoInput-table th{
   padding: 7px 0;
 }
-.el-input--small .el-input__inner{
+.infoInput-table .el-table__row td:nth-child(2) .cell{
+  padding-left:5px;
+}
+.section-add-item-ct .el-input--small .el-input__inner{
   height: 26px;
-  vertical-align: text-top;
 }
 .el-input--small .el-input__icon{
   line-height: 26px;
+}
+.el-upload__input{
+  display: none !important;
+}
+.el-upload-list__item-status-label{
+  display: block;
+}
+.segment-item-add-ct .el-form-item__error{
+  left: 55px;
 }
