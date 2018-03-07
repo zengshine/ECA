@@ -4,7 +4,6 @@ import * as types from './mutation-type'
 
 export default {
   addTotalTime({ commit }, time) {
-    console.log(1);
     commit(types.ADD_TOTAL_TIME, time)
   },
   loadTaskStages({ commit }, params) {
