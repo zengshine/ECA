@@ -7,7 +7,6 @@
 <style>
 @import "../static/css/ele-self-define.css";
 @import '../static/css/reset.css';
-@import '../static/css/common.css';
 </style>
 
 
