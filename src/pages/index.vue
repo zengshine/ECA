@@ -92,12 +92,16 @@
                   <div>
                     <div>
                       <span class="f-w-b section-num">第{{index+1}}章</span>
-                      <span class="section-info-name">{{item.title}}</span>
-                      <span class="f-r">
+                      <span class="f-w-b section-info-name">{{item.title}}</span>
+                      <span class="f-r hidden" @click="toggleSegmentVisible(item)">
                         <i class="fa fa-caret-down"></i>
                       </span>
                     </div>
-                    <div v-if="false"></div>
+                    <div class="course-check-segmentInfo-ct" v-if="true">
+                         <div v-for="(segmentItem,sIndex) in item.courseSections">
+                           <span>{{index+1}}-{{sIndex+1}}：{{segmentItem.title}}</span>
+                         </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -288,7 +292,7 @@
                   </el-form-item>
                   <br>
                   <el-form-item label="教师所在地" prop="courseTeacher.city1">
-                    <el-cascader :options="options" v-model="courseForm.courseTeacher.city"></el-cascader>
+                    <el-input  v-model="courseForm.courseTeacher.city"></el-input>
                   </el-form-item>
                   <br>
                   <el-form-item label="教师简介" prop="courseTeacher.introduction" style="width:500px;">
@@ -412,7 +416,6 @@ export default {
       classInfoSwiper: {},
       classDetailDialogVisible: false,
       addCourseDialogVisible: false,
-      courseEnteringFormPart: {},
       uploadImgTag: {},
       //form dataModal
       courseForm: {},
@@ -858,6 +861,9 @@ export default {
         });
       });
     },
+    toggleSegmentVisible:function(charptItem){
+        charptItem.segmentVisible=!charptItem.segmentVisible
+    },
     editCourse: function() {
       var vm = this;
       arguments[1].stopPropagation();
@@ -950,7 +956,7 @@ export default {
     },
     addCourseSection: function() {
       var vm = this;
-      vm.courseForm.courseChapters.push(vm.charpterItem);
+      vm.courseForm.courseChapters.push(JSON.parse(JSON.stringify(vm.charpterItem)));
     },
     removeCourseSection: function(item) {
       var vm = this;
@@ -959,7 +965,7 @@ export default {
     },
     addSectionSegment: function(index) {
       var vm = this;
-      vm.courseForm.courseChapters[index].courseSections.push(vm.segmentItem);
+      vm.courseForm.courseChapters[index].courseSections.push(JSON.parse(JSON.stringify(vm.segmentItem)));
     },
     removeSectionSegment: function(index, item) {
       var vm = this;
