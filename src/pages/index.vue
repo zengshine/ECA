@@ -67,15 +67,15 @@
             </div>
             <div class="course-property-item">
               <div>难度系数</div>
-              <div>{{checkedCourseItem.numberOfStudentsFromPastToNow}}</div>
+              <div>{{checkedCourseItem.degreeOfDifficulty}}</div>
             </div>
             <div class="course-property-item">
               <div>课程学段</div>
-              <div>{{checkedCourseItem.numberOfStudentsFromPastToNow}}</div>
+              <div>{{checkedCourseItem.area}}</div>
             </div>
             <div class="course-property-item">
               <div>综合评分</div>
-              <div>{{checkedCourseItem.numberOfStudentsFromPastToNow}}</div>
+              <div>{{checkedCourseItem.score}}</div>
             </div>
           </div>
         </div>
