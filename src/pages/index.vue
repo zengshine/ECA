@@ -51,7 +51,7 @@
             <span class="pro-member-count">
               <i class="fa fa-user"></i>{{item.numberOfStudentsFromPastToNow}}</span>
           </div>
-          <div class="member-des">{{item.introduction}}</div>
+          <div class="member-des home-course-des">{{item.introduction}}</div>
         </div>
       </div>
     </div>
@@ -1053,10 +1053,9 @@ export default {
             if (vm.courseDialogTitle == "课程录入") {
               vm.courseList.push(res.data);
             } else {
-              vm.courseList.every(function(item, index) {
+              vm.courseList.forEach(function(item, index) {
                 if (item.id == res.data.id) {
-                  vm.courseList.splice(index, 1, res.data);
-                  return false;
+                  vm.courseList.splice(index, 1, vm.courseForm)
                 }
               });
             }
