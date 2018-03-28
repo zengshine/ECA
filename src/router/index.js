@@ -6,9 +6,14 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',//首页介绍
+      path: '/',
       name: 'home',
       component: resolve => require(['../pages/index.vue'], resolve)
     },
+    {
+      path:'/course',
+      name:'courseManage',
+      component: resolve => require(['../pages/courseManage.vue'], resolve)
+    }
   ]
 })
