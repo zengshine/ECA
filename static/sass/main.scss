@@ -9,6 +9,42 @@
 #virew-wrapper {
   height: 100%;
 }
+.index-body{
+  position: absolute;
+  left: 0;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+}
+.index-left-nav{
+  width: 210px;
+  height: 100%;
+  background: #19172A;
+}
+.nav-item-selected{
+  background: #4A90E2;
+}
+.index-Content{
+  position: absolute;
+  left: 210px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+.left-nav-ct{
+  padding: 15px 0px;
+}
+.nav-item{
+  width: 190px;
+  margin: auto;
+  margin-top:20px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  line-height: 45px;
+  border-radius: 10px;
+}
 .swiper-container{
   width: 100%;
   height: 100%;
@@ -42,7 +78,15 @@
   width: 24px;
   height: 24px;
   margin-right:5px;
-  border:1px solid lightgray;
+  @include center-bg("../image/ecaLogo.png");
+}
+.user-profile-pic{
+  width: 24px;
+  height: 24px;
+  margin-right:5px;
+  display: inline-block;
+  vertical-align: middle;
+  @include center-bg("../image/ecaLogo.png");
 }
 .eca-content-section{
   position: relative;
@@ -344,4 +388,31 @@
 }
 .home-course-des{
   height: 42px;
+}
+// enrollment
+.enrollment-table tr{
+  border-top:1px solid  #e3e3e3;
+  border-bottom:1px solid  #e3e3e3;
+}
+.enrollment-table .thead th{
+  &:first-child{
+    text-align: left;
+    padding-left:28px;
+  }
+   height: 36px;
+   text-align: center;
+}
+.enrollment-table .tbody td{
+  &:first-child{
+    text-align: left;
+    padding-left:28px;
+  }
+  height: 60px;
+  text-align: center
+}
+.content-type-filter-ct span{
+  cursor: pointer;
+}
+.content-type-selected{
+  color: #4A90E2;
 }

@@ -328,9 +328,6 @@
   </div>
 </template>
 
-<style>
-
-</style>
 <style lang="scss" src="../../static/sass/main.scss">
 
 </style>

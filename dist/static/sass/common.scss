@@ -5,7 +5,9 @@ body{
   height: 100%;
   font-family: PingFang SC;
 }
-
+table{
+  border-collapse: collapse;
+  }
 //定义滚动条样式
 ::-webkit-scrollbar{
   width:6px;
@@ -44,6 +46,23 @@ body{
   float: left;
 }
 //宽高
+.w-h-p-100{
+ width: 100%;
+ height: 100%;
+}
+.w-p-100{
+  width: 100%
+}
+.w-p-10{
+  width: 10%
+}
+.w-p-50{
+  width: 50%
+}
+.h-60{
+  height: 60px;
+  line-height: 60px;
+}
 .height-40{
   height: 40px;
 }
@@ -79,6 +98,9 @@ body{
 .ml-55{
   margin-left: 55px;
 }
+.mr-5{
+  margin-right:5px;
+}
 .mr-10{
   margin-right:10px;
 }
@@ -94,6 +116,9 @@ body{
 .mr-30{
   margin-right:30px;
 }
+.mr-50{
+  margin-right:50px;
+}
 .mb-10{
   margin-bottom: 10px;
 }
@@ -108,6 +133,12 @@ body{
 }
 .mt-15{
   margin-top:15px;
+}
+.mt-20{
+  margin-top:20px;
+}
+.pt-20{
+  padding-top:20px;
 }
 .p-l-15{
   padding-left:15px;
@@ -141,9 +172,19 @@ body{
 .f-s-16{
   font-size: 16px;
 }
+//color
+.c-danger{
+  color: #D0021B
+}
 //背景
 .bg-white{
   background-color:white;
+}
+@mixin center-bg($url){
+  background-size: contain;
+  background-position: center;
+  background-repeat:no-repeat;
+  background-image:url($url);
 }
 //其它
 .v-a-m{
