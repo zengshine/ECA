@@ -28,6 +28,28 @@ export default new Router({
       ]
     },
     {
+      path: '/scHome',
+      name: 'scHome',
+      component: resolve => require(['../pages/scHome.vue'], resolve),
+      children:[
+        {
+          path:'/scData',
+          name:'scData',
+          component:resolve=>require(['../pages/scHome/scData.vue'],resolve)
+        },
+        {
+          path:'/scCourse',
+          name:'scCourse',
+          component:resolve=>require(['../pages/scHome/scCourse.vue'],resolve)
+        },
+        {
+          path:'/scSemester',
+          name:'scSemester',
+          component:resolve=>require(['../pages/scHome/scSemester.vue'],resolve)
+        }
+      ]
+    },
+    {
       path:'/coursepool',
       name:'coursePool',
       component: resolve => require(['../pages/coursePool.vue'], resolve)

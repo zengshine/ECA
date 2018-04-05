@@ -56,7 +56,8 @@ export default {
   created() {},
   //create vm.$el and replace 'el' with it ->
   mounted() {
-    var vm = this;
+    var vm = this
+    vm.$router.push(vm.leftMenuList[0].path);
   },
   //when data changes
   beforeUpdate() {},

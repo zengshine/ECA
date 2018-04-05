@@ -59,6 +59,22 @@ table{
 .w-p-50{
   width: 50%
 }
+.h-22{
+  height: 22px;
+  line-height: 22px;
+}
+.h-25{
+  height: 25px;
+  line-height: 25px;
+}
+.h-40{
+  height: 40px;
+  line-height: 40px;
+}
+.h-50{
+  height: 50px;
+  line-height: 50px;
+}
 .h-60{
   height: 60px;
   line-height: 60px;
@@ -71,7 +87,6 @@ table{
 }
 .height-50{
   height: 50px;
-  line-height: 50px;
 }
 .height-55{
   height: 55px;
@@ -86,6 +101,9 @@ table{
   height: 100%;
 }
 //边距
+.ml-10{
+  margin-left:10px;
+}
 .ml-15{
   margin-left:15px;
 }
@@ -143,8 +161,17 @@ table{
 .p-l-15{
   padding-left:15px;
 }
+.p-l-20{
+  padding-left:20px;
+}
+.p-h-5{
+  padding: 0 5px;
+}
 .padd-h-20{
   padding: 0 20px;
+}
+.p-vh-2-3{
+  padding: 2px 3px
 }
 //边框
 .shadow-divider{
@@ -172,6 +199,15 @@ table{
 .f-s-16{
   font-size: 16px;
 }
+.f-s-20{
+  font-size: 16px;
+}
+.f-s-26{
+  font-size: 26px;
+}
+.f-s-32{
+  font-size: 32px;
+}
 //color
 .c-danger{
   color: #D0021B
@@ -185,6 +221,16 @@ table{
   background-position: center;
   background-repeat:no-repeat;
   background-image:url($url);
+}
+@mixin absoluteFullByTop($top){
+  position: absolute;
+  top: $top;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 20px;
+  background: #f3f3f3;
+  overflow-y:auto;
 }
 //其它
 .v-a-m{
@@ -207,5 +253,10 @@ table{
   height: 0px;
   width: 100%;
   clear: both;
+}
+//功能性
+.selected-blue{
+  background: #4A90E2;
+  color: white;
 }
 
