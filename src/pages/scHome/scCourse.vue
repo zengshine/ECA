@@ -2,10 +2,10 @@
   <div class="view-container">
     <div class="h-50 f-w-b f-s-20">
       <div class="f-l ml-20">
-        <span>本学期数据</span>
+        <span>本学期课程</span>
       </div>
       <div class="f-r mr-20 f-s-26">
-        <span>
+        <span @click="addCourse($event)">
           <i class="fa fa-plus-circle"></i>
         </span>
       </div>
@@ -31,55 +31,136 @@
         <div class="class-cover" :style="{backgroundImage:`url(${item.coverImg})`}">
           <div class="course-handler-ct">
             <div>
-              <span class="course-handler-btn">
+              <span class="course-handler-btn" @click="editCourse(item,$event)">
                 <i class="fa fa-edit"></i>
               </span>
-              <span class="course-handler-btn">
+              <!-- <span class="course-handler-btn" @click="addCourse($event)">
                 <i class="fa fa-trash"></i>
-              </span>
+              </span> -->
             </div>
           </div>
         </div>
         <div class="p-h-5">
-        <div class="class-name">{{item.name}}</div>
-        <div class="class-property">
-         <div>
-          <span class="pro-level">{{item.degreeOfDifficulty}}</span>
-          <span class="pro-member-count">
-            <i class="fa fa-user"></i>
-            {{item.numberOfStudentsFromPastToNow}}
-            </span>
-             <span class="ml-10">周一 16:00-17:00</span>
-         </div>
-        <div>
-           <span>授课教师：张轩</span>
-         </div>
-        </div>
-        <div class="h-40 f-s-20">
-          <div class="f-l f-w-b">
-            <span class="scCourse-course-price">¥500</span>
+          <div class="class-name">{{item.name}}</div>
+          <div class="class-property">
+            <div>
+              <span class="pro-level">{{item.degreeOfDifficulty}}</span>
+              <span class="pro-member-count">
+                <i class="fa fa-user"></i>
+                {{item.numberOfStudentsFromPastToNow}}
+              </span>
+              <span class="ml-10">周一 16:00-17:00</span>
+            </div>
+            <div>
+              <span>授课教师：张轩</span>
+            </div>
           </div>
-          <div class="f-r">
-            <span class="scCourse-course-state-handle-btn">下架</span>
+          <div class="h-40 f-s-20">
+            <div class="f-l f-w-b">
+              <span class="scCourse-course-price">¥500</span>
+            </div>
+            <div class="f-r">
+              <span class="scCourse-course-state-handle-btn">下架</span>
+            </div>
           </div>
-        </div>
         </div>
       </div>
+    </div>
+    <!-- 模态框 -->
+    <div>
+      <course-import :courseImportVisible.sync="stateObj.courseImportDialogVisible"></course-import>
+      <sc-course-form :editCourseItem.sync="editCourseItem" :courseFormDialogTitle.sync="courseFormDialogTitle"></sc-course-form>
+      <el-dialog @close="" class="eca-dialog-header" v-if="scCourseInfoVisible" title="课程信息" :visible.sync="scCourseInfoVisible" width="1025px">
+        <div class="dialog-body sc-course-info-dialog-body f-clear p-vh-20">
+          <div class="p-v-30">
+            <div class="f-clear">
+              <div class="f-l">
+                <div class="sc-course-info-cover-ct mr-15" :style="{backgroundImage:`url(${selectedCourseItem.coverImg})`}">
+
+                </div>
+              </div>
+
+              <div class="f-l">
+                <div>
+                  <div class="f-w-b f-s-18 h-30">
+                    <span class="mr-15">本校课程1</span>
+                    <span>
+                      <i class="fa fa-edit"></i>
+                    </span>
+                  </div>
+                  <div>一年级 | 学时15 | 学位</div>
+                  <div>周一至周五 16:00-17:00</div>
+                  <div>上课时间：9月15|上课地点：教学楼A栋</div>
+                </div>
+              </div>
+            </div>
+            <div class="h-40 f-s- f-clear">
+              <div class="f-l f-w-b f-s-18">
+                <span>课程费用：</span>
+                <span class="scCourse-course-price">¥500</span>
+              </div>
+              <div class="f-r">
+                <span class="scCourse-course-state-handle-btn">下架</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <table class="enrollment-table w-p-100">
+                <tr class="thead">
+                  <th class="w-p-10">
+                    <el-checkbox v-model="radio" label="2">姓名</el-checkbox>
+                  </th>
+                  <th class="w-p-10">
+                    <span class="mr-5">性别</span>
+                    <i class="fa fa-caret-down"></i>
+                  </th>
+                  <th class="w-p-10">班级</th>
+                  <th class="w-p-50">电话</th>
+                  <th class="w-p-10">
+                    <i class="el-icon-more-outline"></i>
+                  </th>
+                </tr>
+                <tr class="tbody" v-for="itme in [1,2,3,4,5,6,7]">
+                  <td style="">
+                    <el-checkbox v-model="radio" label="2">李欣欣</el-checkbox>
+                  </td>
+                  <td>女生</td>
+                  <td>一年（3）班</td>
+                  <td>13885678988</td>
+                  <td>
+                    <i class="el-icon-more-outline"></i>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addCourseDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="">录 入</el-button>
+          <el-button type="primary" @click="">保 存</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations, mapState } from 'vuex'
-
+import courseImport from '../../components/courseImport'
+import scCourseForm from '../../components/scCourseForm'
 export default {
   components: {
-
+   courseImport,
+   scCourseForm,
   },
   data() {
     return {
       loading: false,
+      courseImportVisible:false,
       radio: "",
+      scCourseInfoVisible: false,
       selectedGrade: '二年级',
       selectedType: '第三方课程',
       gradeList: [{ name: "一年级" }, { name: "二年级" }, { name: "三年级" }, { name: "四年级" }, { name: "五年级" }, { name: "六年级" }, { name: "七年级" }, { name: "八年级" }, { name: "九年级" },],
@@ -89,6 +170,9 @@ export default {
         grade: 1
       },
       courseList: [],
+      selectedCourseItem: {},
+      editCourseItem:{},
+      courseFormDialogTitle:"",
     }
   },
   //Init Events&lifecycle ->
@@ -118,283 +202,51 @@ export default {
       var vm = this
       vm.selectedType = type.name
     },
-notifyTR: function() {
-      this.$notify({
-        title: "提示",
-        message: arguments[0],
-        position: "top-right",
-        type: arguments[1]
-      });
+    showCourseImportDialog(){
+      var vm=this
+      vm.stateObj.courseImportDialogVisible=true
     },
-    getFileList:function(list,property,type){
-      var fileList=[]
-       list.forEach(function(item){
-         if(item){
-          fileList.push({url:item,property:property,propertyType:type})
-         }
-       })
-       return fileList
-    },
-    checkCourseInfo: function() {
-      var vm = this;
-      vm.classDetailDialogVisible = true;
-      vm.checkedCourseItem = arguments[0];
-      vm.$nextTick(function() {
-        vm.classInfoSwiper = new Swiper(".swiper-container", {
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true
-          },
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-            clickable: true
-          }
-        });
-      });
-    },
-    toggleSegmentVisible:function(charptItem){
-        charptItem.segmentVisible=!charptItem.segmentVisible
-    },
-    editCourse: function() {
-      var vm = this;
-      arguments[1].stopPropagation();
-      vm.courseForm = Vue.util.extend({}, JSON.parse(JSON.stringify(arguments[0])));
-      vm.addCourseDialogVisible = true;
-      vm.courseDialogTitle = "课程编辑";
-      vm.courseEnteringFormPart = "courseContent";
-    },
-    onAddCourseDialogClose: function() {
-      var vm = this;
-      vm.$refs["courseForm"].resetFields();
-      vm.clearUploadFiles();
-    },
-    onclassDetailDialogOpen: function() {
-
-    },
-    openAddCourseDialog: function() {
-      var vm = this;
-      vm.addCourseDialogVisible = true;
-      vm.courseDialogTitle = "课程录入";
-      vm.courseEnteringFormPart = "courseContent";
-      vm.courseForm = Vue.util.extend({}, JSON.parse(JSON.stringify(vm.courseFormTemplate)));
-    },
-    selectSearchFilter: function(type, value) {
-      var vm = this;
-      vm.searchFilter[type] = value;
-      switch (value) {
-        case "小学":
-          vm.searchFilter["grade"] = 1;
-          break;
-        case "初中":
-          vm.searchFilter["grade"] = 7;
-          break;
-        case "高中":
-          vm.searchFilter["grade"] = 10;
-          break;
-      }
-      vm.loadCourse();
-    },
-    handleBeforeRemove: function() {},
-    getImgUrl:function(list,type){
-      if(type=="string"){
-        return ""
-      }else{
-        var urlList=[]
-        list.forEach(item=>{urlList.push(item.url)})
-        return urlList
-      }
-    },
-
-    handleRemove: function(file, fileList) {
-      var vm = this;
-      var url = file.url,property=file.property,propertyType=file.propertyType;
-      var proList = property.split(".");
-      vm.$axios
-        .delete("/web/course/file/command/remove", { params: { url: url } })
-        .then(res => {
-          var imgUrl=vm.getImgUrl(fileList,propertyType)
-          switch (proList.length) {
-            case 1:
-               vm.courseForm[proList[0]]= imgUrl
-              break;
-            case 2:
-              vm.courseForm[proList[0]][proList[1]]=imgUrl
-              break;
-            case 3:
-              vm.courseForm[proList[0]][proList[1]][proList[2]]=imgUrl
-              break;
-            default:
-              break;
-          }
-        })
-        .catch(function(err) {
-          vm.notifyTR("删除图片失败,请检查网络是否连通", "error");
-          console.log(err);
-        });
-    },
-    handlePictureCardPreview: function(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    switchEnteringFormPart: function() {
-      var vm = this;
-      vm.courseEnteringFormPart = arguments[0];
-    },
-    removeCourseFromLocalList: function(item) {
-      var vm = this;
-      var itemIndex = vm.courseList.indexOf(item);
-      vm.courseList.splice(itemIndex, 1);
-    },
-    addCourseSection: function() {
-      var vm = this;
-      vm.courseForm.courseChapters.push(JSON.parse(JSON.stringify(vm.charpterItem)));
-    },
-    removeCourseSection: function(item) {
-      var vm = this;
-      var itemIndex = vm.courseForm.courseChapters.indexOf(item);
-      vm.courseForm.courseChapters.splice(itemIndex, 1);
-    },
-    addSectionSegment: function(index) {
-      var vm = this;
-      vm.courseForm.courseChapters[index].courseSections.push(JSON.parse(JSON.stringify(vm.segmentItem)));
-    },
-    removeSectionSegment: function(index, item) {
-      var vm = this;
-      var itemIndex = vm.courseForm.courseChapters[
-        index
-      ].courseSections.indexOf(item);
-      vm.courseForm.courseChapters[index].courseSections.splice(itemIndex, 1);
-    },
-    handleCoverSuccessUpload: function(response, file, fileList) {
-      var vm = this;
-      vm.courseItem.coverImg = response;
-    },
-    clearUploadFiles: function() {
-      var vm = this;
-      vm.uploadRefNames.forEach(function(ref) {
-        vm.$refs[ref].clearFiles();
-      });
-    },
-    imgUploadRequest: function(imgType, url, form) {
-      var vm = this;
-      let config = {
-        headers: { "Content-Type": "multipart/form-data" }
-      };
-      vm.$axios
-        .post(url, form, config)
-        .then(res => {
-          switch (imgType) {
-            case "coverImg":
-              vm.courseForm["coverImg"] = res.data;
-              break;
-            case "imgs":
-              vm.courseForm["imgs"].push(res.data);
-              break;
-            case "profilePhoto":
-              vm.courseForm.courseTeacher["profilePhoto"] = res.data;
-          }
-        })
-        .catch(function(err) {
-          alert("图片上传失败");
-          console.log(err);
-        });
-    },
-    getImgFormdata: function() {
-      var vm = this;
-      var param = arguments[0];
-      var fileObj = param.file;
-      // 接收上传文件的后台地址
-      var url = param.action;
-      // FormData 对象
-      var form = new FormData();
-      // 文件对象
-      form.append("multipartFile", fileObj);
-      return form;
-    },
-    uploadCover: function() {
-      var vm = this;
-      var form = vm.getImgFormdata(arguments[0]);
-      vm.imgUploadRequest("coverImg", arguments[0].action, form);
-    },
-    uploadProfilePic: function() {
-      var vm = this;
-      var form = vm.getImgFormdata(arguments[0]);
-      vm.imgUploadRequest("profilePhoto", arguments[0].action, form);
-    },
-    uploadBanners: function() {
-      var vm = this;
-      var form = vm.getImgFormdata(arguments[0]);
-      vm.imgUploadRequest("imgs", arguments[0].action, form);
-    },
-    validateForm: function(formName) {
-      var vm = this;
-      var isValid = false;
-      vm.$refs[formName].validate(valid => {
-        isValid = valid;
-      });
-      return isValid;
-    },
-    saveAddedCourse: function(method, url) {
-      var vm = this;
-      var formName = "courseForm";
-      if (vm.validateForm(formName)) {
-        vm.$axios[method](url, vm.courseForm)
-          .then(res => {
-            vm.notifyTR("课程保存成功", "success");
-            if (vm.courseDialogTitle == "课程录入") {
-              vm.courseList.push(res.data);
-            } else {
-              vm.courseList.forEach(function(item, index) {
-                if (item.id == res.data.id) {
-                  vm.courseList.splice(index, 1, vm.courseForm)
-                }
-              });
-            }
-            vm.addCourseDialogVisible = false;
-          })
-          .catch(function(err) {
-            vm.notifyTR("课程保存失败,请检查网络是否连通", "error");
-            console.log(err);
-          });
-      } else {
-        vm.$alert("请完整填写课程表单信息", "提示", {
-          confirmButtonText: "确定"
-        });
-      }
-    },
-    deleteCourse: function() {
-      var vm = this;
-      var id = arguments[0].id;
-      arguments[1].stopPropagation();
-      vm.$axios
-        .delete("/web/course/course/command/remove?id=" + id)
-        .then(res => {
-          vm.notifyTR("成功删除课程", "success");
-          vm.removeCourseFromLocalList(arguments[0]);
-        })
-        .catch(function(err) {
-          vm.notifyTR("删除课程失败,请检查网络是否连通", "error");
-          console.log(err);
-        });
-    },
-    loadCourse: function() {
+    loadCourse: function () {
       var vm = this;
       vm.loading = true;
       vm.$axios
-        .post("/web/course/course/query/list", vm.searchFilter)
+        .post(vm.requestUrl.queryCourseTemplateByFilter, vm.searchFilter)
         .then(res => {
           vm.courseList = res.data;
           vm.loading = false;
         })
-        .catch(function(err) {
+        .catch(function (err) {
           vm.loading = false;
           console.log(`loadCourse:${err}`);
         });
-    }
+    },
+    checkCourseInfo(item) {
+      var vm = this
+      vm.scCourseInfoVisible = true
+      vm.selectedCourseItem = item
+    },
+    editCourse: function(course,evt) {
+      var vm = this;
+      evt.stopPropagation()
+      vm.editCourseItem = Vue.util.extend({}, JSON.parse(JSON.stringify(course)));
+      vm.$nextTick(function(){
+      vm.courseFormDialogTitle = "课程编辑";
+      vm.stateObj.scCourseImportDialogVisible = true;
+      })
+    },
+    addCourse: function(evt) {
+      var vm = this;
+      evt.stopPropagation()
+      vm.stateObj.scCourseImportDialogVisible = true;
+      vm.courseFormDialogTitle = "新增课程";
+    },
   },
   //computed
-  computed: {},
+  computed: {
+      ...mapState([
+      'stateObj','requestUrl'
+    ]),
+  },
   watch: {},
   filter: {}
 }

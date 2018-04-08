@@ -2,7 +2,7 @@
 <div>
  <div class="h-50 f-w-b f-s-20">
 <div class="f-l ml-20">
-<span>本学期课程</span>
+<span>本学期数据</span>
 </div>
 <div class="f-r mr-20 f-s-26">
 <span><i class="fa fa-plus-circle"></i></span>
@@ -27,9 +27,9 @@
     </tr>
     <tr class="tbody" v-for="itme in dataList">
       <td style=""><el-checkbox v-model="radio" label="2">李欣欣</el-checkbox></td>
-      <td class="c-danger">女生</td>
+      <td class="">女生</td>
       <td>13887088588</td>
-      <td class="c-danger">书法，小提琴，画画</td>
+      <td class="">书法，小提琴，画画</td>
       <td><i class="el-icon-more-outline"></i></td>
     </tr>
   </table>

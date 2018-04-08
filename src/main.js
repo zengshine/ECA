@@ -31,6 +31,10 @@ Vue.prototype.$axios = axios
 Vue.prototype.commom = commom
 Vue.prototype.perfectScrollBar=perfectScrollBar
 
+window.globalData={
+
+}
+
 new Vue({
   router,
   store,
