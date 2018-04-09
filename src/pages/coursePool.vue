@@ -161,6 +161,11 @@ export default {
       }
       vm.loadCourse();
     },
+    removeCourseFromLocalList: function (item) {
+      var vm = this;
+      var itemIndex = vm.courseList.indexOf(item);
+      vm.courseList.splice(itemIndex, 1);
+    },
     checkCourseInfo(item) {
       var vm = this
       vm.selectedCourseItem = item
@@ -184,7 +189,9 @@ export default {
       var id = arguments[0].id;
       arguments[1].stopPropagation();
       vm.$axios
-        .delete(requestUrl.removeCourseTemplate+"?id=" + id)
+        .delete(vm.requestUrl.removeCourseTemplate, {
+          data: { id: id }
+        })
         .then(res => {
           vm.notifyTR("成功删除课程", "success");
           vm.removeCourseFromLocalList(arguments[0]);

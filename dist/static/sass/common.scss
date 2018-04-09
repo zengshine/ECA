@@ -67,6 +67,10 @@ table{
   height: 25px;
   line-height: 25px;
 }
+.h-30{
+  height: 3;
+  line-height: 30px;
+}
 .h-40{
   height: 40px;
   line-height: 40px;
@@ -167,11 +171,20 @@ table{
 .p-h-5{
   padding: 0 5px;
 }
+.p-h-20{
+  padding: 0 20px;
+}
+.p-v-30{
+  padding: 0 30px;
+}
 .padd-h-20{
   padding: 0 20px;
 }
 .p-vh-2-3{
   padding: 2px 3px
+}
+.p-vh-20{
+  padding: 20px;
 }
 //边框
 .shadow-divider{
@@ -198,6 +211,9 @@ table{
 }
 .f-s-16{
   font-size: 16px;
+}
+.f-s-18{
+  font-size: 18px;
 }
 .f-s-20{
   font-size: 16px;
@@ -258,5 +274,12 @@ table{
 .selected-blue{
   background: #4A90E2;
   color: white;
+}
+.selected-green{
+  color: #09BB07 !important;
+}
+.bg-green{
+  background: #06C29C !important;
+  color: white
 }
 

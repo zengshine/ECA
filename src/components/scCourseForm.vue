@@ -3,16 +3,31 @@
     <el-dialog @open="onCourseFormDialogOpen" class="eca-dialog-header addCourse-dialog" :title="courseFormDialogTitle" :visible.sync="stateObj.scCourseImportDialogVisible" width="1152px">
       <div class="dialog-body f-clear addCourse-dialog-body">
         <div class="add-course-left f-l h-p-100">
-          <div class="class-item class-item-addCourseDialog mg-center" v-for="item in [1]">
+          <div class="class-item class-item-addCourseDialog mg-center" v-for="item in [courseForm]">
             <div class="class-cover" :style="{backgroundImage:`url(${courseForm.coverImg})`}"></div>
             <div class="course-info-detail-ct">
-              <div class="class-name">{{courseForm.name||"课程名称"}}</div>
-              <div class="class-property">
-                <span class="pro-level">{{courseForm.degreeOfDifficulty||'难度'}}</span>
-                <span class="pro-member-count">
-                  <i class="fa fa-user"></i>{{courseForm.numberOfStudentsFromPastToNow||0}}</span>
-              </div>
-              <div class="member-des">{{courseForm.description||'简介'}}</div>
+           <div class="p-h-5">
+           <div class="class-name">{{item.name}}</div>
+            <div class="class-property">
+            <div>
+              <span class="pro-level">{{item.degreeOfDifficulty||"初级"}}</span>
+              <span class="ml-10">学时：{{item.numberOfLessons}}</span>
+              <span class="ml-10">学位：{{item.maxNumberOfStudents}}</span>
+            </div>
+            <div>
+               <span v-if="item.lessonDays.length>0" class="">{{item.lessonDays[0]|dayTransform}}</span>
+               <span class="ml-10">16:00-17:00</span>
+            </div>
+            <div>
+              <span v-if="">授课教师：{{item.courseTeacher.realName}}</span>
+            </div>
+          </div>
+          <div class="h-40 f-s-20">
+            <div class="f-l f-w-b">
+              <span class="scCourse-course-price">¥{{item.courseFee}}</span>
+            </div>
+          </div>
+        </div>
             </div>
           </div>
           <div class="add-item-car course-entering-add mt-15 f-s-16 hidden">
@@ -31,16 +46,24 @@
             <el-form :model="courseForm" :rules="rules" :inline="true" ref="courseForm" size="medium" label-width="100px" label-position="top" class="demo-courseForm">
               <!-- 课程费用 -->
               <div v-show="courseEnteringFormPart=='courseFee'">
-                <el-form-item label="课程名称" prop="name">
-                  <el-input placeholder="请输入课程名称" v-model="courseForm.name"></el-input>
+                <el-form-item label="课时" prop="numberOfLessons">
+                   <el-input-number v-model="courseForm.numberOfLessons" controls-position="right"></el-input-number>
                 </el-form-item>
                 <br>
-                <el-form-item label="封面介绍" prop="introduction" style="width:500px;">
-                  <el-input type="textarea" :rows="3" v-model="courseForm.introduction"></el-input>
+                <el-form-item label="预支教务费用" prop="advancePayment">
+                   <el-input-number v-model="courseForm.advancePayment" controls-position="right"></el-input-number>
                 </el-form-item>
                 <br>
-                <el-form-item label="封面介绍" prop="introduction" style="width:500px;">
-                  <el-input type="textarea" :rows="3" v-model="courseForm.introduction"></el-input>
+                <el-form-item label="课程学费" prop="courseFee">
+                   <el-input-number v-model="courseForm.courseFee" controls-position="right"></el-input-number>
+                </el-form-item>
+                <br>
+                <el-form-item label="其它费用" prop="extraFee">
+                   <el-input-number v-model="courseForm.extraFee" controls-position="right"></el-input-number>
+                </el-form-item>
+                <br>
+                <el-form-item label="其他费用备注" prop="extraFeeExplain" style="width:500px;">
+                  <el-input type="textarea" :rows="3" v-model="courseForm.extraFeeExplain"></el-input>
                 </el-form-item>
               </div>
               <!-- 课程内容 -->
@@ -72,34 +95,40 @@
                     </el-radio-group>
                   </div>
                 </el-form-item>
-                <el-form-item label="课时" prop="numberOfStudentsFromPastToNow" style="width:132px;">
-                  <el-input-number v-model="courseForm.numberOfStudentsFromPastToNow" controls-position="right"></el-input-number>
+                <el-form-item label="课时" prop="numberOfLessons" style="width:132px;">
+                  <el-input-number v-model="courseForm.numberOfLessons" controls-position="right"></el-input-number>
                 </el-form-item>
-                <el-form-item label="学位" prop="score" style="width:132px;">
-                  <el-input-number v-model="courseForm.score" controls-position="right"></el-input-number>
+                <el-form-item label="学位" prop="maxNumberOfStudents" style="width:132px;">
+                  <el-input-number :min=1 v-model="courseForm.maxNumberOfStudents" controls-position="right"></el-input-number>
                 </el-form-item>
                 <br>
-                <el-form-item label="时间" prop="area">
+                <el-form-item label="开始时间" prop="lessonBeginTime">
                   <div>
-                    <el-date-picker v-model="courseForm.lessonBeginTime" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-                    </el-date-picker>
+                    <el-time-picker v-model="courseForm.lessonBeginTime"  align="right"  unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" placeholder="选择开始时间">
+                    </el-time-picker>
+                  </div>
+                </el-form-item>
+                <el-form-item label="结束时间" prop="lessonEndTime">
+                  <div>
+                    <el-time-picker v-model="courseForm.lessonEndTime"  align="right"  unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" placeholder="选择结束时间">
+                    </el-time-picker>
                   </div>
                 </el-form-item>
                 <br>
-                <el-form-item label="时间" prop="area">
+                <el-form-item label="时间" prop="lessonDays">
                   <div>
-                    <el-radio-group v-model="courseForm.area">
-                      <el-radio-button v-for="item in eduStageList" :label="item"></el-radio-button>
-                    </el-radio-group>
+                    <el-checkbox-group v-model="courseForm.lessonDays">
+                      <el-checkbox-button v-for="item in dayList" :label="item.value">{{item.name}}</el-checkbox-button>
+                    </el-checkbox-group>
                   </div>
                 </el-form-item>
                 <br>
-                <el-form-item label="封面介绍" prop="introduction" style="width:500px;">
+               <el-form-item label="上课地点" prop="name">
+                  <el-input placeholder="请输上课地点" v-model="courseForm.lessonLocation"></el-input>
+                </el-form-item>
+                <br>
+                <el-form-item label="课程简介" prop="introduction" style="width:500px;">
                   <el-input type="textarea" :rows="3" v-model="courseForm.introduction"></el-input>
-                </el-form-item>
-                <br>
-                <el-form-item label="课程简介" prop="description" style="width:500px;">
-                  <el-input type="textarea" :rows="3" v-model="courseForm.description"></el-input>
                 </el-form-item>
                 <br>
                 <el-form-item label="封面" prop="coverImg">
@@ -200,8 +229,9 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="stateObj.scCourseImportDialogVisible = false">取 消</el-button>
-        <el-button v-if="courseFormDialogTitle=='新增课程'" type="primary" @click="saveAddedCourse('post',requestUrl.addCourse)">录 入</el-button>
-        <el-button v-if="courseFormDialogTitle=='课程编辑'" type="primary" @click="saveAddedCourse('put',requestUrl.editCourse)">保 存</el-button>
+        <el-button v-if="courseFormDialogTitle=='新增课程'" type="primary" @click="showimportCourseDialog()">课库导入</el-button>
+        <el-button v-if="courseFormDialogTitle=='新增课程'" type="success" @click="saveAddedCourse('post',requestUrl.addCourse)">录 入</el-button>
+        <el-button v-if="courseFormDialogTitle=='课程编辑'" type="primary" @click="saveAddedCourse('put',requestUrl.updateCourse)">保 存</el-button>
       </div>
     </el-dialog>
   </div>
@@ -216,6 +246,7 @@ export default {
   },
   data() {
     return {
+      lessonTimePeriod:[],
       courseFormTitle: this.courseFormDialogTitle,
       courseList: [],
       eduStageList: ["小学", "初中", "高中"],
@@ -248,36 +279,12 @@ export default {
         { value: 12, name: "高三" }
       ],
       levelList: ["初级", "中级", "高级"],
+      dayList:[{name:"星期一",value:1},{name:"星期二",value:2},{name:"星期三",value:3},{name:"星期四",value:4},{name:"星期五",value:5},{name:"星期六",value:6},{name:"星期天",value:7},],
       courseEnteringFormPart: "courseContent",
       dialogImageUrl: "",
       dialogVisible: false,
       courseItem: {
         sectionList: [
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          },
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          },
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          },
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          },
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          }
         ]
       },
       toAddCourseItem: {
@@ -291,8 +298,8 @@ export default {
       //form dataModal
       courseForm: {},
       courseFormTemplate: {
-        sourceId: null,
-        schoolId: null,
+        //sourceId: null,
+        schoolId:"schoolid",
         area: "",
         advancePayment: 0,
         courseFee: 0,
@@ -311,8 +318,9 @@ export default {
         lessonEndTime: "string",
         lessonFee: 0,
         lessonLocation: "",
-        maxNumberOfStudents: "",
-        numberOfLessons: "",
+        lessonDays:[],
+        maxNumberOfStudents: 0,
+        numberOfLessons: 0,
         startDate: "2018-04-08T12:59:38.729Z",
         imgs: [],
         description: "",
@@ -334,288 +342,22 @@ export default {
           honours: "",
           profilePhoto: "",
           address: {
-            city: "string",
+            city: "珠海",
             detail: "string",
             district: "string",
             province: "string"
           }
         }
       },
-      options: [
-        {
-          value: "zhinan",
-          label: "指南",
-          children: [
-            {
-              value: "shejiyuanze",
-              label: "设计原则",
-              children: [
-                {
-                  value: "yizhi",
-                  label: "一致"
-                },
-                {
-                  value: "fankui",
-                  label: "反馈"
-                },
-                {
-                  value: "xiaolv",
-                  label: "效率"
-                },
-                {
-                  value: "kekong",
-                  label: "可控"
-                }
-              ]
-            },
-            {
-              value: "daohang",
-              label: "导航",
-              children: [
-                {
-                  value: "cexiangdaohang",
-                  label: "侧向导航"
-                },
-                {
-                  value: "dingbudaohang",
-                  label: "顶部导航"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: "zujian",
-          label: "组件",
-          children: [
-            {
-              value: "basic",
-              label: "Basic",
-              children: [
-                {
-                  value: "layout",
-                  label: "Layout 布局"
-                },
-                {
-                  value: "color",
-                  label: "Color 色彩"
-                },
-                {
-                  value: "typography",
-                  label: "Typography 字体"
-                },
-                {
-                  value: "icon",
-                  label: "Icon 图标"
-                },
-                {
-                  value: "button",
-                  label: "Button 按钮"
-                }
-              ]
-            },
-            {
-              value: "form",
-              label: "Form",
-              children: [
-                {
-                  value: "radio",
-                  label: "Radio 单选框"
-                },
-                {
-                  value: "checkbox",
-                  label: "Checkbox 多选框"
-                },
-                {
-                  value: "input",
-                  label: "Input 输入框"
-                },
-                {
-                  value: "input-number",
-                  label: "InputNumber 计数器"
-                },
-                {
-                  value: "select",
-                  label: "Select 选择器"
-                },
-                {
-                  value: "cascader",
-                  label: "Cascader 级联选择器"
-                },
-                {
-                  value: "switch",
-                  label: "Switch 开关"
-                },
-                {
-                  value: "slider",
-                  label: "Slider 滑块"
-                },
-                {
-                  value: "time-picker",
-                  label: "TimePicker 时间选择器"
-                },
-                {
-                  value: "date-picker",
-                  label: "DatePicker 日期选择器"
-                },
-                {
-                  value: "datetime-picker",
-                  label: "DateTimePicker 日期时间选择器"
-                },
-                {
-                  value: "upload",
-                  label: "Upload 上传"
-                },
-                {
-                  value: "rate",
-                  label: "Rate 评分"
-                },
-                {
-                  value: "form",
-                  label: "Form 表单"
-                }
-              ]
-            },
-            {
-              value: "data",
-              label: "Data",
-              children: [
-                {
-                  value: "table",
-                  label: "Table 表格"
-                },
-                {
-                  value: "tag",
-                  label: "Tag 标签"
-                },
-                {
-                  value: "progress",
-                  label: "Progress 进度条"
-                },
-                {
-                  value: "tree",
-                  label: "Tree 树形控件"
-                },
-                {
-                  value: "pagination",
-                  label: "Pagination 分页"
-                },
-                {
-                  value: "badge",
-                  label: "Badge 标记"
-                }
-              ]
-            },
-            {
-              value: "notice",
-              label: "Notice",
-              children: [
-                {
-                  value: "alert",
-                  label: "Alert 警告"
-                },
-                {
-                  value: "loading",
-                  label: "Loading 加载"
-                },
-                {
-                  value: "message",
-                  label: "Message 消息提示"
-                },
-                {
-                  value: "message-box",
-                  label: "MessageBox 弹框"
-                },
-                {
-                  value: "notification",
-                  label: "Notification 通知"
-                }
-              ]
-            },
-            {
-              value: "navigation",
-              label: "Navigation",
-              children: [
-                {
-                  value: "menu",
-                  label: "NavMenu 导航菜单"
-                },
-                {
-                  value: "tabs",
-                  label: "Tabs 标签页"
-                },
-                {
-                  value: "breadcrumb",
-                  label: "Breadcrumb 面包屑"
-                },
-                {
-                  value: "dropdown",
-                  label: "Dropdown 下拉菜单"
-                },
-                {
-                  value: "steps",
-                  label: "Steps 步骤条"
-                }
-              ]
-            },
-            {
-              value: "others",
-              label: "Others",
-              children: [
-                {
-                  value: "dialog",
-                  label: "Dialog 对话框"
-                },
-                {
-                  value: "tooltip",
-                  label: "Tooltip 文字提示"
-                },
-                {
-                  value: "popover",
-                  label: "Popover 弹出框"
-                },
-                {
-                  value: "card",
-                  label: "Card 卡片"
-                },
-                {
-                  value: "carousel",
-                  label: "Carousel 走马灯"
-                },
-                {
-                  value: "collapse",
-                  label: "Collapse 折叠面板"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: "ziyuan",
-          label: "资源",
-          children: [
-            {
-              value: "axure",
-              label: "Axure Components"
-            },
-            {
-              value: "sketch",
-              label: "Sketch Templates"
-            },
-            {
-              value: "jiaohu",
-              label: "组件交互文档"
-            }
-          ]
-        }
-      ],
-      selectedOptions3: ["zujian", "data", "tag"],
+
       rules: {
         name: [
           { required: true, message: "请输入课程名称", trigger: "blur" }
           // { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ],
         area: [{ required: true, message: "请选择学段", trigger: "change" }],
+        lessonBeginTime:[{ required: true, message: "请选择课程时间段", trigger: "change" }],
+        lessonLocation:[{ required: true, message: "请选择上课地点", trigger: "change" }],
         grades: [
           {
             type: "array",
@@ -629,6 +371,14 @@ export default {
             type: "array",
             required: true,
             message: "请至少上传一张课程介绍图片",
+            trigger: "change"
+          }
+        ],
+        lessonDays:[
+          {
+            type:"array",
+            required: true,
+            message: "请选择课程上课时间",
             trigger: "change"
           }
         ],
@@ -680,6 +430,9 @@ export default {
   //create vm.$el and replace 'el' with it ->
   mounted() {
     var vm = this
+    vueBus.$on('importCourseSelected',function(importCourse){
+      vm.importCourseInfo(importCourse)
+    })
     vm.courseForm = Vue.util.extend({}, JSON.parse(JSON.stringify(vm.courseFormTemplate)))
   },
   //when data changes
@@ -700,6 +453,28 @@ export default {
         type: arguments[1]
       });
     },
+    showimportCourseDialog(){
+      var vm=this
+      vm.stateObj.courseImportDialogVisible=true
+    },
+    importCourseInfo(importCourse){
+      var vm=this
+      Object.keys(importCourse).forEach((key)=>{
+        if(  vm.courseForm.hasOwnProperty(key)){
+        if(importCourse[key]===null||importCourse[key]===undefined){
+          vm.courseForm[key]=importCourse[key]
+        }else{
+        var keyType=Object.prototype.toString.call(importCourse[key]).slice(8,-1)
+        if(keyType=='Object'||keyType=="Array"){
+          vm.courseForm[key]=JSON.parse(JSON.stringify(importCourse[key]))
+        }else{
+         vm.courseForm[key]=importCourse[key]
+        }
+        }
+        }
+      })
+    },
+
     onCourseFormDialogOpen() {
       var vm = this
       if (vm.courseFormDialogTitle == '课程编辑') {
@@ -923,6 +698,7 @@ export default {
       var vm = this;
       var formName = "courseForm";
       if (vm.validateForm(formName)) {
+        console.table(vm.courseForm)
         vm.$axios[method](url, vm.courseForm)
           .then(res => {
             vm.notifyTR("课程保存成功", "success");

@@ -170,7 +170,9 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="stateObj.courseFormDialogVisible = false">取 消</el-button>
-        <el-button v-if="courseFormDialogTitle=='新增课程'" type="primary" @click="saveAddedCourse('post',requestUrl.addCourseTemplate)">录 入</el-button>
+
+         <el-button v-if="courseFormDialogTitle=='新增课程'&&formModel=='importModel'" type="primary" @click="showimportCourseDialog">课库导入</el-button>
+        <el-button v-if="courseFormDialogTitle=='新增课程'" type="success" @click="saveAddedCourse('post',requestUrl.addCourseTemplate)">录 入</el-button>
         <el-button v-if="courseFormDialogTitle=='课程编辑'" type="primary" @click="saveAddedCourse('put',requestUrl.editCourseTemplate)">保 存</el-button>
       </div>
     </el-dialog>
@@ -625,7 +627,7 @@ export default {
   props: {
     courseFormDialogTitle: String,
     editCourseItem: Object,
-    formModel: String
+    formModel: String,
   },
   //Init Events&lifecycle ->
   beforeCreate() { },
@@ -634,6 +636,9 @@ export default {
   //create vm.$el and replace 'el' with it ->
   mounted() {
     var vm = this
+    vueBus.$on('importCourseSelected',function(importCourse){
+      vm.importCourseInfo(importCourse)
+    })
     vm.courseForm = Vue.util.extend({}, JSON.parse(JSON.stringify(vm.courseFormTemplate)))
   },
   //when data changes
@@ -654,6 +659,23 @@ export default {
         type: arguments[1]
       });
     },
+    importCourseInfo(importCourse){
+      var vm=this
+      Object.keys(importCourse).forEach((key)=>{
+        if(  vm.courseForm.hasOwnProperty(key)){
+        if(importCourse[key]===null||importCourse[key]===undefined){
+          vm.courseForm[key]=importCourse[key]
+        }else{
+        var keyType=Object.prototype.toString.call(importCourse[key]).slice(8,-1)
+        if(keyType=='Object'||keyType=="Array"){
+          vm.courseForm[key]=JSON.parse(JSON.stringify(importCourse[key]))
+        }else{
+         vm.courseForm[key]=importCourse[key]
+        }
+        }
+        }
+      })
+    },
     onCourseFormDialogOpen() {
       var vm = this
       if (vm.courseFormDialogTitle == '课程编辑') {
@@ -661,6 +683,10 @@ export default {
       } else {
         vm.courseForm = Vue.util.extend({}, JSON.parse(JSON.stringify(vm.courseFormTemplate)))
       }
+    },
+    showimportCourseDialog(){
+      var vm=this
+      vm.stateObj.courseImportDialogVisible=true
     },
     getFileList: function (list, property, type) {
       var fileList = []
@@ -778,11 +804,6 @@ export default {
     switchEnteringFormPart: function () {
       var vm = this;
       vm.courseEnteringFormPart = arguments[0];
-    },
-    removeCourseFromLocalList: function (item) {
-      var vm = this;
-      var itemIndex = vm.courseList.indexOf(item);
-      vm.courseList.splice(itemIndex, 1);
     },
     addCourseSection: function () {
       var vm = this;

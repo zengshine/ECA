@@ -7,7 +7,7 @@
             <span class="in-b mr-20 inline-filter-item" v-for="item in gradeList" :class="{'selected-blue':selectedGrade==item.name}" @click="selecteGrade(item)">{{item.name}}</span>
           </div>
           <div class="h-50 p-l-20">
-            <span class="in-b mr-20 inline-filter-item" v-for="(item,index) in classTypes" :class="{'selected-blue':selectedType==item.name}" @click="selecteType(item)">（{{item.name}}）班</span>
+            <span class="in-b mr-20 inline-filter-item" v-for="(item,index) in classTypes" :class="{'selected-blue':selectedType==item.name}" @click="selecteType(item)">{{item.name}}</span>
           </div>
         </div>
         <div class="import-course-list-ct p-h-20">
@@ -28,7 +28,7 @@
               <div>
               </div>
             </div>
-             <span :class="{'selected-green':selectedCourseList.indexOf(item.id)>-1}" class="course-selected-flag" @click="selectedCourse(item,$event)">
+             <span :class="{'selected-green':selectedCourse.id==item.id}" class="course-selected-flag" @click="selectSingleCourse(item,$event)">
                   <i class="fa fa-check-circle"></i>
              </span>
           </div>
@@ -44,7 +44,7 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="stateObj.courseImportDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="">导 入</el-button>
+        <el-button type="success" @click="importCourse()">确定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -62,13 +62,14 @@ export default {
       selectedGrade: '二年级',
       selectedType: 1,
       gradeList: [{ name: "一年级" }, { name: "二年级" }, { name: "三年级" }, { name: "四年级" }, { name: "五年级" }, { name: "六年级" }, { name: "七年级" }, { name: "八年级" }, { name: "九年级" },],
-      classTypes: [{ name: "1" }, { name: "2" }, { name: "3" }],
+      classTypes: [{ name: "本校课程" }, { name: "第三方课程" }],
       searchFilter: {
         area: "小学",
         grade: 1
       },
       courseList: [],
-      selectedCourseList:[]
+      selectedCourseList:[],
+      selectedCourse:{}
     }
   },
   props: {
@@ -102,7 +103,12 @@ export default {
       var vm = this
       vm.selectedType = type.name
     },
-    selectedCourse(course,evt){
+    selectSingleCourse(course,evt){
+      var vm=this
+      evt.stopPropagation()
+      vm.selectedCourse=JSON.parse(JSON.stringify(course))
+    },
+    selectCourse(course,evt){
       var vm=this
       evt.stopPropagation()
       if(vm.selectedCourseList.indexOf(course.id)<=-1){
@@ -111,14 +117,17 @@ export default {
        vm.selectedCourseList.splice(vm.selectedCourseList.indexOf(course.id),1)
       }
     },
-    isCourseSelected(item){
-       return
+    importCourse(){
+      var vm=this
+      vueBus.$emit('importCourseSelected',vm.selectedCourse)
+      vm.selectCourse={}
+      vm.stateObj.courseImportDialogVisible=false
     },
     loadCourse: function () {
       var vm = this;
       vm.loading = true;
       vm.$axios
-        .post("/web/course/course/query/list", vm.searchFilter)
+        .post(vm.requestUrl.queryCourseTemplateByFilter, vm.searchFilter)
         .then(res => {
           vm.courseList = res.data;
           vm.loading = false;
@@ -132,7 +141,7 @@ export default {
   //computed
   computed: {
     ...mapState([
-      'stateObj'
+      'stateObj','requestUrl'
     ]),
   },
   watch: {

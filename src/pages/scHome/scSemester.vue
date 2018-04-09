@@ -5,7 +5,7 @@
         <span>课程库</span>
       </div>
       <div class="f-r mr-20 f-s-26">
-        <span @click="importCourse">
+        <span @click="addCourse">
           <i class="fa fa-plus-circle"></i>
         </span>
       </div>
@@ -24,9 +24,9 @@
                 <span class="course-handler-btn" @click="editCourse(item,$event)">
                   <i class="fa fa-edit"></i>
                 </span>
-                <!-- <span class="course-handler-btn" @click="deleteCourse(item,$event)">
+                <span class="course-handler-btn" @click="deleteCourse(item,$event)">
                   <i class="fa fa-trash"></i>
-                </span> -->
+                </span>
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@
         <!-- 模态框容器 -->
     <div>
       <course-info :checkedCourseItem="selectedCourseItem"></course-info>
-      <course-form :editCourseItem.sync="editCourseItem" :courseFormDialogTitle.sync="courseFormDialogTitle"></course-form>
+      <course-form :editCourseItem.sync="editCourseItem" :courseFormDialogTitle.sync="courseFormDialogTitle" formModel="importModel"></course-form>
       <course-import></course-import>
     </div>
   </div>
@@ -122,6 +122,17 @@ export default {
       vm.selectedCourseItem = item
       vm.stateObj.courseInfoDialogVisible = true
     },
+    removeCourseFromLocalList: function (item) {
+      var vm = this;
+      var itemIndex = vm.courseList.indexOf(item);
+      vm.courseList.splice(itemIndex, 1);
+    },
+    addCourse: function(evt) {
+      var vm = this;
+      evt.stopPropagation()
+      vm.stateObj.courseFormDialogVisible = true;
+      vm.courseFormDialogTitle = "新增课程";
+    },
     editCourse: function(course,evt) {
       var vm = this;
       evt.stopPropagation()
@@ -129,11 +140,28 @@ export default {
       vm.courseFormDialogTitle = "课程编辑";
       vm.stateObj.courseFormDialogVisible = true;
     },
+    deleteCourse: function() {
+      var vm = this;
+      var id = arguments[0].id;
+      arguments[1].stopPropagation();
+      vm.$axios
+        .delete(vm.requestUrl.removeCourseTemplate, {
+          data: { id: id }
+        })
+        .then(res => {
+          vm.notifyTR("成功删除课程", "success");
+          vm.removeCourseFromLocalList(arguments[0]);
+        })
+        .catch(function(err) {
+          vm.notifyTR("删除课程失败,请检查网络是否连通", "error");
+          console.log(err);
+        });
+    },
     loadCourse: function () {
       var vm = this;
       vm.loading = true;
       vm.$axios
-        .post("/web/course/course/query/list", vm.searchFilter)
+        .post(vm.requestUrl.queryCourseTemplateByFilter, vm.searchFilter)
         .then(res => {
           vm.courseList = res.data;
           vm.loading = false;
@@ -146,7 +174,7 @@ export default {
   },
   //computed
    computed: {
-    ...mapState(['stateObj']),
+    ...mapState(['stateObj','requestUrl']),
     gradeList: function() {
       var vm = this
       return function(area) {

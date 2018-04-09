@@ -61,6 +61,7 @@
   font-weight: bold;
   line-height: 45px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .swiper-container{
   width: 100%;
@@ -105,10 +106,19 @@
   vertical-align: middle;
   @include center-bg("../image/ecaLogo.png");
 }
-.eca-content-section{
-  position: relative;
-  width: 1166px;
-  margin: 0px auto;
+@media screen and (min-width:1166px){
+  .eca-content-section{
+    position: relative;
+    width: 1166px;
+    margin: 0px auto;
+  }
+}
+@media only screen and (max-width:1166px){
+  .eca-content-section{
+    position: relative;
+    width: 100%;
+    margin: 0px auto;
+  }
 }
 .course-add-btn{
   position: absolute;
@@ -129,6 +139,7 @@
   line-height: 22px;
   padding: 0 7px;
   border-radius: 4px;
+  cursor: pointer;
 }
 .filter-category{
   margin-right:5px;
@@ -213,6 +224,21 @@
     color: white;
   }
   padding: 0 10px;
+}
+.course-handler-ct .course-selected-btn{
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  color: white;
+  line-height: 20px;
+}
+.class-cover .course-selected-flag{
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  color: white;
+  line-height: 20px;
+  font-size: 24px;
 }
 .course-info-detail-ct{
   padding: 7px 10px;
@@ -444,7 +470,7 @@
   color: #4A90E2;
 }
 .scCourse-course-price{
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   color: #D0021B;
 }
@@ -464,4 +490,22 @@
   background: #06C29C;
   background: #B7B7B7;
   color: white;
+}
+.sc-course-info-cover-ct{
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+}
+.sc-course-info-dialog-body{
+  height: 750px;
+  overflow-y: auto;
+}
+.dialog-body-750{
+  height: 750px;
+  overflow-y: auto;
+}
+.import-course-list-ct{
+  height: 650px;
+  overflow-y: auto;
+  background: #f3f3f3;
 }

@@ -2,9 +2,9 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
-var webpack=require('webpack')
+var webpack = require('webpack')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -15,9 +15,9 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ?
+      config.build.assetsPublicPath :
+      config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -45,12 +45,15 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        options: {
+          presets: ['es2015']
+       },
+        include: [resolve('src'), resolve('test'), resolve('/node_modules/element-ui/src'), resolve('node_modules/element-ui/packages')]
       },
       {
-   test: /\.scss$/,
-   loaders: ["style", "css", "sass"]
- },
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
+      },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -77,10 +80,10 @@ module.exports = {
       }
     ],
   },
-  plugins:[
+  plugins: [
     new webpack.LoaderOptionsPlugin({
-      vue:{
-        postcss:[require('autoprefixer'), require('cssnext')]
+      vue: {
+        postcss: [require('autoprefixer'), require('cssnext')]
       }
     })
   ]

@@ -22,6 +22,7 @@ import '../static/css/swiper.css'
 import 'perfect-scrollbar/css/perfect-scrollbar.css'
 
 window.Vue=Vue
+window.vueBus=new Vue()
 Vue.config.productionTip = false
 Vue.config.devtools = true
 Vue.use(ElementUI)
@@ -34,6 +35,22 @@ Vue.prototype.perfectScrollBar=perfectScrollBar
 window.globalData={
 
 }
+
+Vue.filter('dayTransform',function(val){
+  if(val!==0&&!val){
+    return
+  }else{
+    var dayList=[{name:"星期一",value:1},{name:"星期二",value:2},{name:"星期三",value:3},{name:"星期四",value:4},{name:"星期五",value:5},{name:"星期六",value:6},{name:"星期天",value:7},]
+    var day=dayList.find(day=>{
+      return day.value=val
+    })
+    if(day){
+      return day.name
+    }else{
+      return
+    }
+  }
+})
 
 new Vue({
   router,
