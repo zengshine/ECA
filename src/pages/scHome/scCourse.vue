@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="scCourse-content-ct">
-      <div class="class-item class-item-home" v-for="item in courseList" @click="checkCourseInfo(item)">
+      <div class="class-item class-item-home" v-for="item in courseListWithFilter(selectedType)" @click="checkCourseInfo(item)">
         <div class="class-cover" :style="{backgroundImage:`url(${item.coverImg})`}">
           <div class="course-handler-ct">
             <div>
@@ -40,17 +40,21 @@
             </div>
           </div>
         </div>
-        <div class="p-h-5">
+        <div class="p-h-8">
           <div class="class-name">{{item.name}}</div>
           <div class="class-property">
             <div>
-              <span class="pro-level">{{item.degreeOfDifficulty}}</span>
-              <span class="ml-10">学时：{{item.numberOfLessons}}</span>
-              <span class="ml-10">学位：{{item.numberOfLessons}}</span>
+              <span class="" v-for="(itemg,index) in item.grades">{{itemg}}<span v-if="index!==item.grades.length-1">/</span></span>
+              <span>年级</span>
+              <span>|</span>
+              <span class="">学时：{{item.numberOfLessons}}</span>
+                <span>|</span>
+              <span class="">学位：{{item.studentIds.length}}/{{item.maxNumberOfStudents}}</span>
             </div>
             <div>
-              <span class="">{{item.lessonDays[0]|dayTransform}}</span>
-              <span class="ml-10">16:00-17:00</span>
+              <span>周</span>
+              <span v-for="(itemL,index) in item.lessonDays" class="">{{itemL|dayTransform}}<span v-if="index!==item.lessonDays.length-1">/</span></span>
+               <span class="ml-10">{{item.lessonBeginTime|TimeHM}}</span>-<span class="">{{item.lessonEndTime|TimeHM}}</span>
             </div>
             <div>
               <span>授课教师：{{item.courseTeacher.realName}}</span>
@@ -71,7 +75,7 @@
     <!-- 模态框 -->
     <div>
       <course-import :courseImportVisible.sync="stateObj.courseImportDialogVisible"></course-import>
-      <sc-course-form :editCourseItem.sync="editCourseItem" :courseFormDialogTitle.sync="courseFormDialogTitle"></sc-course-form>
+      <sc-course-form :editCourseItem.sync="editCourseItem" :courseFormDialogTitle.sync="courseFormDialogTitle" :formModal="selectedType"></sc-course-form>
     </div>
   </div>
 </template>
@@ -92,7 +96,7 @@ export default {
       radio: "",
       scCourseInfoVisible: false,
       selectedGrade: "二年级",
-      selectedType: "第三方课程",
+      selectedType: globalData.courseType.institution,
       gradeList: [
         { name: "一年级", value: 1 },
         { name: "二年级", value: 2 },
@@ -104,7 +108,7 @@ export default {
         { name: "八年级", value: 8 },
         { name: "九年级", value: 9 }
       ],
-      classTypes: [{ name: "本校课程" }, { name: "第三方课程" }],
+      classTypes: [{ name: globalData.courseType.school }, { name: globalData.courseType.institution }],
       searchFilter: {
         conditions: [
           {
@@ -136,6 +140,9 @@ export default {
   //create vm.$el and replace 'el' with it ->
   mounted() {
     var vm = this;
+    vueBus.$on('loadScCourse',function(){
+      vm.loadCourse()
+    })
     vm.loadCourse();
   },
   //when data changes
@@ -256,7 +263,21 @@ export default {
   },
   //computed
   computed: {
-    ...mapState(["stateObj", "requestUrl"])
+    ...mapState(["stateObj", "requestUrl"]),
+        courseListWithFilter:function(type){
+      var vm=this
+      return function(type){
+        if(type=='第三方课程'){
+          return vm.courseList.filter((course)=>{
+          return course.sourceId!=null
+          })
+        }else{
+        return vm.courseList.filter((course)=>{
+          return course.sourceId==null
+          })
+      }
+      }
+    },
   },
   watch: {
     searchFilter: {

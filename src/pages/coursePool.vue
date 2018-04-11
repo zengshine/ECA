@@ -45,6 +45,7 @@
               </div>
             </div>
           </div>
+          <div class="p-h-8">
           <div class="class-name">{{item.name}}</div>
           <div class="class-property">
             <span class="pro-level">{{item.degreeOfDifficulty}}</span>
@@ -52,6 +53,7 @@
               <i class="fa fa-user"></i>{{item.numberOfStudentsFromPastToNow}}</span>
           </div>
           <div class="member-des home-course-des">{{item.introduction}}</div>
+          </div>
         </div>
       </div>
     </div>

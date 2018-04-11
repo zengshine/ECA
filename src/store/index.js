@@ -10,6 +10,7 @@ const state = {
     courseImportDialogVisible:false,
     courseFormDialogVisible:false,
     scCourseImportDialogVisible:false,
+    courseTemplateImportDialogVisible:false,
     courseInfoDialogVisible:false
   },
   requestUrl: {

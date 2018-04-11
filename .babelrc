@@ -10,7 +10,7 @@
   //   "stage-3"
   // ],
   "presets": [
-    ["es2015", {"modules": false}]
+    "es2015"
   ],
   "plugins": ["transform-runtime","transform-object-rest-spread","transform-vue-jsx"],
   "comments": false,

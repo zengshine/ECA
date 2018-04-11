@@ -182,9 +182,11 @@
 }
 .class-item-home{
   width: 218px;
+  background: white;
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.15);
 }
 .class-item-home .class-cover{
-  border-radius:6px;
+  border-radius:0px;
 }
 .class-item-addCourseDialog{
   width: 218px;

@@ -5,7 +5,12 @@
         <span>课程库</span>
       </div>
       <div class="f-r mr-20 f-s-26">
-        <span @click="addCourse">
+        <!-- 新增模板 -->
+        <span v-if="selectedType!=='第三方课程'" @click="addCourse">
+          <i class="fa fa-plus-circle"></i>
+        </span>
+        <!-- 第三方导入模板 -->
+        <span v-if="selectedType=='第三方课程'" @click="importCourse">
           <i class="fa fa-plus-circle"></i>
         </span>
       </div>
@@ -17,7 +22,7 @@
       <span class="in-b mr-20 inline-filter-item" v-for="(item,index) in classTypes" :class="{'selected-blue':selectedType==item.name}" @click="selecteType(item)">{{item.name}}</span>
     </div>
     <div class="scSemester-content-ct">
-        <div class="class-item class-item-home" v-for="item in courseList" @click="checkCourseInfo(item)">
+        <div class="class-item class-item-home" v-for="item in courseListWithFilter(selectedType)" @click="checkCourseInfo(item)">
           <div class="class-cover" :style="{backgroundImage:`url(${item.coverImg})`}">
             <div class="course-handler-ct">
               <div>
@@ -30,32 +35,37 @@
               </div>
             </div>
           </div>
-          <div class="class-name">{{item.name}}</div>
+          <div class="p-h-8">
+            <div class="class-name p-h-8">{{item.name}}</div>
           <div class="class-property">
             <span class="pro-level">{{item.degreeOfDifficulty}}</span>
             <span class="pro-member-count">
               <i class="fa fa-user"></i>{{item.numberOfStudentsFromPastToNow}}</span>
           </div>
           <div class="member-des home-course-des">{{item.introduction}}</div>
+          </div>
         </div>
     </div>
         <!-- 模态框容器 -->
     <div>
       <course-info :checkedCourseItem="selectedCourseItem"></course-info>
       <course-form :editCourseItem.sync="editCourseItem" :courseFormDialogTitle.sync="courseFormDialogTitle" formModel="importModel"></course-form>
-      <course-import></course-import>
+       <course-import :courseImportVisible.sync="stateObj.courseImportDialogVisible"></course-import>
+      <course-template-import></course-template-import>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations, mapState } from 'vuex'
+import courseTemplateImport from '../../components/courseTemplateImport'
 import courseImport from '../../components/courseImport'
 import courseInfo from '../../components/courseInfo'
 import courseForm from '../../components/courseForm'
 import Swiper from "swiper"
 export default {
   components: {
+    courseTemplateImport,
     courseImport,
     courseInfo,
     courseForm
@@ -85,6 +95,9 @@ export default {
   //create vm.$el and replace 'el' with it ->
   mounted() {
     var vm = this
+    vueBus.$on('importCourseTemplateSuccess',function(){
+      vm.loadCourse()
+    })
     vm.loadCourse()
   },
   //when data changes
@@ -115,7 +128,7 @@ export default {
     },
     importCourse(){
       var vm=this
-      vm.stateObj.courseImportDialogVisible=true
+      vm.stateObj.courseTemplateImportDialogVisible=true
     },
     checkCourseInfo(item) {
       var vm = this
@@ -175,6 +188,20 @@ export default {
   //computed
    computed: {
     ...mapState(['stateObj','requestUrl']),
+    courseListWithFilter:function(type){
+      var vm=this
+      return function(type){
+        if(type=='第三方课程'){
+          return vm.courseList.filter((course)=>{
+          return course.sourceId!=null
+          })
+        }else{
+        return vm.courseList.filter((course)=>{
+          return course.sourceId==null
+          })
+      }
+      }
+    },
     gradeList: function() {
       var vm = this
       return function(area) {

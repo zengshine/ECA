@@ -136,6 +136,20 @@ Date.prototype.Format = function (fmt) { //author: meizz
   // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
   // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
 }
+//检查是否为时间格式
+function isDate(dateString){
+  if(dateString.trim()=="")return true;
+  var r=dateString.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+  if(r==null){
+  return false;
+  }
+  var d=new Date(r[1],r[3]-1,r[4]);
+  var num = (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]);
+  if(num==0){
+
+  }
+  return (num!=0);
+ }
 window.Self_$=function(selector){
   var ele=[]
   if (selector && selector.indexOf('.') > -1) {

@@ -58,7 +58,7 @@
                   </div>
                 </el-form-item>
                 <el-form-item label="学习人数" prop="numberOfStudentsFromPastToNow" style="width:132px;">
-                  <el-input-number v-model="courseForm.numberOfStudentsFromPastToNow" controls-position="right"></el-input-number>
+                  <el-input-number :min=1 v-model="courseForm.numberOfStudentsFromPastToNow" controls-position="right"></el-input-number>
                 </el-form-item>
                 <el-form-item label="综合评分" prop="score" style="width:132px;">
                   <el-input-number v-model="courseForm.score" controls-position="right"></el-input-number>
@@ -225,31 +225,7 @@ export default {
       dialogVisible: false,
       courseItem: {
         sectionList: [
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          },
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          },
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          },
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          },
-          {
-            sectionName: "课程介绍",
-            des:
-            '所谓跆拳道，跆（TAE），意为以脚踢、摔撞；拳（KWON），以拳头打击；道（DO），是一种艺术方法。跆拳道是一种利用拳和脚的艺术方法。它是以脚法为主的功夫，其脚法占70%。跆拳道的套路共有24套；另外还有兵器、擒拿、摔锁、对拆自卫术及10余种基本功夫等。 跆拳道是经过东亚文化发展的一项朝鲜武术，以东方心灵为土壤，承继长久传统， 以"始于礼，终礼"的武道精神为基础。'
-          }
+
         ]
       },
       toAddCourseItem: {
@@ -263,7 +239,8 @@ export default {
       //form dataModal
       courseForm: {},
       courseFormTemplate: {
-        sourceId:"third",
+        sourceId:"null",
+        schoolId:"b41dde61-e99e-4e8a-af71-7b89efb92ddf",
         area: "",
         name: "",
         grades: [],
@@ -638,6 +615,9 @@ export default {
     var vm = this
     vueBus.$on('importCourseSelected',function(importCourse){
       vm.importCourseInfo(importCourse)
+      if(vm.courseForm.schoolId==null){
+        vm.courseForm.schoolId='b41dde61-e99e-4e8a-af71-7b89efb92ddf'
+      }
     })
     vm.courseForm = Vue.util.extend({}, JSON.parse(JSON.stringify(vm.courseFormTemplate)))
   },

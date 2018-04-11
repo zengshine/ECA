@@ -33,14 +33,22 @@ Vue.prototype.commom = commom
 Vue.prototype.perfectScrollBar=perfectScrollBar
 
 window.globalData={
-
+   courseFormModal:{
+     schoolCourseModel:'schoolCourseModel',
+     thirdCourseModal:'thirdCourseModel',
+   },
+   courseType:{
+     school:'本校课程',
+     institution:'第三方课程'
+   }
 }
 
 Vue.filter('dayTransform',function(val){
   if(val!==0&&!val){
     return
   }else{
-    var dayList=[{name:"星期一",value:1},{name:"星期二",value:2},{name:"星期三",value:3},{name:"星期四",value:4},{name:"星期五",value:5},{name:"星期六",value:6},{name:"星期天",value:7},]
+    //var dayList=[{name:"星期一",value:1},{name:"星期二",value:2},{name:"星期三",value:3},{name:"星期四",value:4},{name:"星期五",value:5},{name:"星期六",value:6},{name:"星期天",value:7},]
+    var dayList=[{name:"一",value:1},{name:"二",value:2},{name:"三",value:3},{name:"四",value:4},{name:"五",value:5},{name:"六",value:6},{name:"日",value:7},]
     var day=dayList.find(day=>{
       return day.value=val
     })
@@ -48,6 +56,15 @@ Vue.filter('dayTransform',function(val){
       return day.name
     }else{
       return
+    }
+  }
+})
+Vue.filter('TimeHM',function(val){
+  if(val){
+    try{
+     return new Date(val).Format("h:m")
+    }catch(ex){
+     return val
     }
   }
 })

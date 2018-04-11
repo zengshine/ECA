@@ -48,7 +48,7 @@ module.exports = {
         options: {
           presets: ['es2015']
        },
-        include: [resolve('src'), resolve('test'), resolve('/node_modules/element-ui/src'), resolve('node_modules/element-ui/packages')]
+        include: [resolve('src'), resolve('test'),resolve('node_modules/_dom7')]
       },
       {
         test: /\.scss$/,

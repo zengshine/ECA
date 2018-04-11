@@ -45,7 +45,7 @@ export default {
       leftMenuList: [
         { name: "数据窗口", iconClass: "workWindows", path: "/scData" },
         { name: "课程管理", iconClass: "tsFiles", path: "/scCourse" },
-        { name: "学期管理", iconClass: "courseManage", path: "/scSemester"},
+        { name: "课库管理", iconClass: "courseManage", path: "/scSemester"},
       ],
       leftNavLogoUrl:""
     };

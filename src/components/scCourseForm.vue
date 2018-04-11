@@ -6,20 +6,24 @@
           <div class="class-item class-item-addCourseDialog mg-center" v-for="item in [courseForm]">
             <div class="class-cover" :style="{backgroundImage:`url(${courseForm.coverImg})`}"></div>
             <div class="course-info-detail-ct">
-           <div class="p-h-5">
-           <div class="class-name">{{item.name}}</div>
-            <div class="class-property">
+        <div class="p-h-8">
+          <div class="class-name">{{item.name}}</div>
+          <div class="class-property">
             <div>
-              <span class="pro-level">{{item.degreeOfDifficulty||"初级"}}</span>
-              <span class="ml-10">学时：{{item.numberOfLessons}}</span>
-              <span class="ml-10">学位：{{item.maxNumberOfStudents}}</span>
+              <span class="" v-for="(itemg,index) in item.grades">{{itemg}}<span v-if="index!==item.grades.length-1">/</span></span>
+              <span>年级</span>
+              <span>|</span>
+              <span class="">学时：{{item.numberOfLessons}}</span>
+                <span>|</span>
+              <span class="">学位：{{item.studentIds.length}}/{{item.maxNumberOfStudents}}</span>
             </div>
             <div>
-               <span v-if="item.lessonDays.length>0" class="">{{item.lessonDays[0]|dayTransform}}</span>
-               <span class="ml-10">16:00-17:00</span>
+              <span>周</span>
+              <span v-for="(itemL,index) in item.lessonDays" class="">{{itemL|dayTransform}}<span v-if="index!==item.lessonDays.length-1">/</span></span>
+               <span class="ml-10">{{item.lessonBeginTime|TimeHM}}</span>-<span class="">{{item.lessonEndTime|TimeHM}}</span>
             </div>
             <div>
-              <span v-if="">授课教师：{{item.courseTeacher.realName}}</span>
+              <span>授课教师：{{item.courseTeacher.realName}}</span>
             </div>
           </div>
           <div class="h-40 f-s-20">
@@ -96,7 +100,7 @@
                   </div>
                 </el-form-item>
                 <el-form-item label="课时" prop="numberOfLessons" style="width:132px;">
-                  <el-input-number v-model="courseForm.numberOfLessons" controls-position="right"></el-input-number>
+                  <el-input-number :min=1 v-model="courseForm.numberOfLessons" controls-position="right"></el-input-number>
                 </el-form-item>
                 <el-form-item label="学位" prop="maxNumberOfStudents" style="width:132px;">
                   <el-input-number :min=1 v-model="courseForm.maxNumberOfStudents" controls-position="right"></el-input-number>
@@ -298,8 +302,8 @@ export default {
       //form dataModal
       courseForm: {},
       courseFormTemplate: {
-        //sourceId: null,
-        schoolId:"schoolid",
+        sourceId: "",
+        schoolId:"b41dde61-e99e-4e8a-af71-7b89efb92ddf",
         area: "",
         advancePayment: 0,
         courseFee: 0,
@@ -421,7 +425,7 @@ export default {
   props: {
     courseFormDialogTitle: String,
     editCourseItem: Object,
-    formModel: String
+    formModal: String
   },
   //Init Events&lifecycle ->
   beforeCreate() { },
@@ -432,6 +436,11 @@ export default {
     var vm = this
     vueBus.$on('importCourseSelected',function(importCourse){
       vm.importCourseInfo(importCourse)
+        if(vm.formModal==globalData.courseType.institution){
+          vm.courseForm.sourceId=importCourse.id
+        }else{
+           vm.courseForm.sourceId=null
+        }
     })
     vm.courseForm = Vue.util.extend({}, JSON.parse(JSON.stringify(vm.courseFormTemplate)))
   },
@@ -462,7 +471,7 @@ export default {
       Object.keys(importCourse).forEach((key)=>{
         if(  vm.courseForm.hasOwnProperty(key)){
         if(importCourse[key]===null||importCourse[key]===undefined){
-          vm.courseForm[key]=importCourse[key]
+
         }else{
         var keyType=Object.prototype.toString.call(importCourse[key]).slice(8,-1)
         if(keyType=='Object'||keyType=="Array"){
@@ -697,8 +706,8 @@ export default {
     saveAddedCourse: function (method, url) {
       var vm = this;
       var formName = "courseForm";
+
       if (vm.validateForm(formName)) {
-        console.table(vm.courseForm)
         vm.$axios[method](url, vm.courseForm)
           .then(res => {
             vm.notifyTR("课程保存成功", "success");
@@ -711,6 +720,7 @@ export default {
                 }
               });
             }
+            vueBus.$emit('loadScCourse')
             vm.addCourseDialogVisible = false;
           })
           .catch(function (err) {
